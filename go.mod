@@ -1,4 +1,4 @@
-module github.com/srcgod/protos
+module github.com/srcgod/protossss
 
 go 1.22
 

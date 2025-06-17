@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+package auth;
+import "validate/validate.proto";
+
+option go_package = "srcgod.sso.v1;ssov1";
+
+service Auth {
+  rpc Register (RegisterRequest) returns (RegisterResponse);
+  rpc Login (LoginRequest) returns (LoginResponse);
+  rpc IsAdmin(IsAdminRequest) returns (IsAdminResponse);
+}
+
+message RegisterRequest{
+  string email = 1 [(validate.field).string.email = true];
+  string user_name = 2 [(validate.field).string.min_len=4, (validate.field).string.max_len=12];
+  string password = 3 [(validate.field).string.min_len=4, (validate.field).string.max_len=12];
+}
+
+message RegisterResponse {
+  int64 userID = 1;
+}
+
+message LoginRequest{
+  string email = 1 [(validate.field).string.email = true] ;
+  string password = 2 [(validate.field).string.min_len=4, (validate.field).string.max_len=12];
+  int32 app_id = 3;
+}
+
+message  LoginResponse{
+  string token = 1;
+}
+
+message IsAdminRequest {
+  int64 user_id = 1;
+}
+
+message IsAdminResponse {
+  bool IsAdmin = 1;
+}
